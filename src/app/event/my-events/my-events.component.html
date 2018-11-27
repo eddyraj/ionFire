@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      My Events
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/create-event']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-list *ngIf="eventsAttending$ | async; let eventsAttending">
+    <ion-item-divider color="medium">
+      <ion-label color="light">
+        Events Attending
+      </ion-label>
+    </ion-item-divider>
+    <ion-card *ngFor="let eventAttending of eventsAttending">
+      <ion-item *ngIf="eventAttending.type == 'Emergency'" color="primary">
+        <ion-icon name="warning" slot="start"></ion-icon>
+        <ion-label>
+          <h2>Emergency</h2>
+        </ion-label>
+      </ion-item>
+
+      <ion-card-content *ngIf="eventAttending.type == 'Emergency'">
+        <h2>{{ eventAttending.title }}</h2>
+        <p>{{ eventAttending.eventDate | date }}</p>
+        <ion-text color="primary"><h3>Blood type: {{ eventAttending.bloodGroupRequired}}</h3></ion-text>
+        <p>Mention patient: {{ eventAttending.patientName }}</p>
+        <p>{{ eventAttending.description }}</p>
+        <p>{{ eventAttending.location }}</p>
+      </ion-card-content>
+
+      <img src="https://placeimg.com/640/480/any">
+
+      <ion-item *ngIf="eventAttending.type != 'Emergency'">
+        <ion-label>
+          <h2>{{ eventAttending.title }}</h2>
+        </ion-label>
+      </ion-item>
+      <ion-card-content *ngIf="eventAttending.type != 'Emergency'">
+        <p>{{ eventAttending.location }}</p>
+        <p>{{ eventAttending.eventDate | date }} | {{ eventAttending.startTime | date:'HH:mm' }} - {{
+          eventAttending.endTime | date:'HH:mm' }}</p>
+        <p>Blood type: {{ eventAttending.bloodGroupRequired}}</p>
+        <p>{{ eventAttending.description }}</p>
+      </ion-card-content>
+      <ion-item color="light">
+        <ion-col size="4">
+          <ion-button fill="solid" disabled>
+            <div>Attending</div>
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button fill="clear">
+            <ion-icon slot="start" name="person"></ion-icon>
+            <div>{{ event.attendeeCount || 0}}</div>
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button fill="clear" (click)="share(eventAttending.id)">
+            <ion-icon slot="start" name="share-alt"></ion-icon>
+            <div>Share</div>
+          </ion-button>
+        </ion-col>
+      </ion-item>
+
+    </ion-card>
+
+  </ion-list>
+
+  <ion-list *ngIf="events$ | async; let events; else loading;">
+    <ion-item-divider color="medium">
+      <ion-label color="light">
+        Events Created
+      </ion-label>
+    </ion-item-divider>
+    <ion-card *ngFor="let event of events">
+      <ion-item *ngIf="event.type == 'Emergency'" color="primary">
+        <ion-icon name="warning" slot="start"></ion-icon>
+        <ion-label>
+          <h2>Emergency</h2>
+        </ion-label>
+        <ion-button [routerLink]="['/edit-event', event.id]" fill="outline" color="light" slot="end">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-card-content *ngIf="event.type == 'Emergency'">
+        <p>{{ event.title }}</p>
+      </ion-card-content>
+
+      <ion-item *ngIf="event.type != 'Emergency'">
+        <ion-button [routerLink]="['/edit-event', event.id]" fill="outline" slot="end">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-label>
+          <p>{{ event.title }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item color="light">
+        <ion-col size="4">
+          <ion-button fill="clear">
+            <ion-icon slot="start" name="person"></ion-icon>
+            <div>{{ event.attendeeCount || 0}}</div>
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button fill="clear" (click)="share(event.id)">
+            <ion-icon slot="start" name="share-alt"></ion-icon>
+            <div>Share</div>
+          </ion-button>
+        </ion-col>
+      </ion-item>
+    </ion-card>
+
+  </ion-list>
+  <ng-template #loading>
+    <ion-spinner color="primary"></ion-spinner>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-list *ngIf="events != null; else loading">
+  <ion-card *ngFor="let event of events; trackBy: trackEvent">
+    <ion-item *ngIf="event.type == 'Emergency'" color="primary">
+      <ion-icon name="warning" slot="start"></ion-icon>
+      <ion-label>
+        <h2>Emergency</h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-card-content *ngIf="event.type == 'Emergency'">
+      <h2>{{ event.title }}</h2>
+      <p>{{ event.eventDate | date }}</p>
+      <ion-text>
+        <h3>Blood type: {{ event.bloodGroupRequired}}</h3>
+      </ion-text>
+      <p>Mention patient: {{ event.patientName }}</p>
+      <p>{{ event.description }}</p>
+      <p>{{ event.location }}</p>
+    </ion-card-content>
+
+    <img src="https://placeimg.com/640/480/any">
+
+    <ion-card-header *ngIf="event.type != 'Emergency'">
+      <ion-card-title>{{ event.title }}</ion-card-title>
+      <ion-card-subtitle>{{ event.location }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content *ngIf="event.type != 'Emergency'">
+      <p>{{ event.eventDate | date }} | {{ event.startTime | date:'HH:mm' }} - {{ event.endTime | date:'HH:mm'}}</p>
+      <p>Blood type: {{ event.bloodGroupRequired}}</p>
+      <p>{{ event.description }}</p>
+    </ion-card-content>
+    <ion-item color="light">
+      <ion-col size="4">
+        <ion-button *ngIf="!event.attending" fill="solid" size="small" color="primary" (click)="attend(event)">
+          <div>Attend</div>
+        </ion-button>
+        <ion-button *ngIf="event.attending" fill="solid" size="small" color="primary" disabled>
+          <div>Attending</div>
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-button fill="clear">
+          <ion-icon slot="start" name="person"></ion-icon>
+          <div>{{ event.attendeeCount || 0}}</div>
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-button fill="clear" (click)="share(event.id)">
+          <ion-icon slot="start" name="share-alt"></ion-icon>
+          <div>Share</div>
+        </ion-button>
+      </ion-col>
+    </ion-item>
+
+  </ion-card>
+</ion-list>
+<ng-template #loading>
+  <ion-spinner color="primary"></ion-spinner>
+</ng-template>

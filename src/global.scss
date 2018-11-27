@@ -1,0 +1,41 @@
+// http://ionicframework.com/docs/theming/
+@import "~@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+ion-spinner{
+    position: fixed;
+    z-index: 999;
+    height: 15em;
+    width: 7em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+.error-text {
+    font-size: 12px;
+}
+
+.title-icon {
+    margin-top: 8px;
+    height: 27px;
+}
+
+@media (min-width: 700px) {
+    .app-root {
+      width: 800px;
+      margin: auto;
+      position: relative;
+    }
+}

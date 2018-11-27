@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Create Event
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <form [formGroup]="createEventForm">
+      <ion-item>
+        <ion-label color="primary" position="floating">Type</ion-label>
+        <ion-select [(ngModel)]="type" formControlName="type">
+          <ion-select-option value="Emergency">Emergency</ion-select-option>
+          <ion-select-option value="Planned Event">Planned Event</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Title</ion-label>
+        <ion-input [class.invalid]="!createEventForm.controls.title.pristine && !createEventForm.controls.title.valid" formControlName="title" type="text"></ion-input>
+      </ion-item>
+      <!-- <ion-item *ngIf="!createEventForm.controls.title.pristine && !createEventForm.controls.title.valid">
+        <p ion-text color="primary">Please enter a title.</p>
+      </ion-item> -->
+      <ion-item>
+        <ion-label color="primary" position="floating">Description</ion-label>
+        <ion-textarea maxlength="300" formControlName="description"></ion-textarea>
+      </ion-item>
+      <!-- <ion-item *ngIf="!registerForm.controls.lastName.valid  && (registerForm.controls.lastName.dirty || submitAttempt)">
+            <p ion-text color="primary">Please enter your last name.</p>
+          </ion-item> -->
+      <ion-item *ngIf="type == 'Emergency'">
+        <ion-label color="primary" position="floating">Patient's name</ion-label>
+        <ion-input formControlName="patientName" type="text"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="type != 'Emergency'">
+        <ion-label color="primary">Date</ion-label>
+        <ion-datetime display-format="DD-MM-YYYY" picker-format="DD MM YYYY" [min]="todayFormatted" max="2030-10-31" formControlName="eventDate"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="type != 'Emergency'">
+        <ion-label color="primary">Start Time</ion-label>
+        <ion-datetime type="date" display-format="HH:mm" formControlName="startTime" (ionChange)="checkTimeStartEnd()"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="type != 'Emergency'">
+        <ion-label color="primary">End Time</ion-label>
+        <ion-datetime display-format="HH:mm" formControlName="endTime" (ionChange)="checkTimeStartEnd()"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="timeError">
+        <ion-text color="primary" class="error-text">End time needs to be after start time.</ion-text>
+      </ion-item>
+      <!-- <ion-item>
+            <ion-label stacked>Type</ion-label>
+            <ion-input formControlName="type" type="text"></ion-input>
+          </ion-item> -->
+
+      <!-- <ion-item>
+            <ion-label stacked>bloodGroupRequired</ion-label>
+            <ion-input formControlName="bloodGroupRequired" type="text"></ion-input>
+          </ion-item> -->
+      <ion-item>
+        <ion-label color="primary">Blood Group Required</ion-label>
+        <ion-select formControlName="bloodGroupRequired">
+          <ion-select-option value="All">All</ion-select-option>
+          <ion-select-option value="AB+">AB+</ion-select-option>
+          <ion-select-option value="AB-">AB-</ion-select-option>
+          <ion-select-option value="A+">A+</ion-select-option>
+          <ion-select-option value="A-">A-</ion-select-option>
+          <ion-select-option value="B+">B+</ion-select-option>
+          <ion-select-option value="B-">B-</ion-select-option>
+          <ion-select-option value="O+">O+</ion-select-option>
+          <ion-select-option value="O-">O-</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Location</ion-label>
+        <ion-textarea formControlName="location" type="text"></ion-textarea>
+      </ion-item>
+      <!-- <ion-item *ngIf="type == 'Emergency'">
+        <ion-label color="primary">Location</ion-label>
+        <ion-select formControlName="location">
+          <ion-select-option value="Hospital A">Hospital A</ion-select-option>
+          <ion-select-option value="Hospital B">Hospital B</ion-select-option>
+          <ion-select-option value="Hospital C">Hospital C</ion-select-option>
+          <ion-select-option value="Hospital D">Hospital D</ion-select-option>
+          <ion-select-option value="Hospital E">Hospital E</ion-select-option>
+          <ion-select-option value="Hospital F">Hospital F</ion-select-option>
+          <ion-select-option value="Hospital G">Hospital G</ion-select-option>
+          <ion-select-option value="Hospital H">Hospital H</ion-select-option>
+          <ion-select-option value="Hospital I">Hospital I</ion-select-option>
+        </ion-select>
+      </ion-item> -->
+    </form>
+  </ion-list>
+  <ion-button color="primary" expand="block" [disabled]="!createEventForm.valid || timeError" (click)="create()">Create</ion-button> 
+ 
+</ion-content>

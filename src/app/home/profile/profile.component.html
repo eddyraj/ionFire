@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngIf="auth.user$ | async as user">
+    <form novalidate [formGroup]="updateForm">
+      <ion-item>
+        <ion-label color="primary" position="floating">Email</ion-label>
+        <ion-input color="medium" formControlName="email" type="email"></ion-input>
+      </ion-item>
+      <!-- <ion-item *ngIf="!updateForm.controls.email.valid  && (updateForm.controls.email.dirty || submitAttempt)">
+            <ion-text class="register-hint-text" color="medium">Please enter a valid email.</ion-text>
+        </ion-item> -->
+      <!-- <ion-item>
+          <ion-label color="primary" position="floating">Password</ion-label>
+          <ion-input color="medium" [class.invalid]="!updateForm.controls.password.valid && (updateForm.controls.password.dirty || submitAttempt)" formControlName="password" type="password"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!updateForm.controls.password.valid  && (updateForm.controls.password.dirty || submitAttempt)">
+            <ion-text class="register-hint-text" color="medium">Please enter a valid password. Min 6 characters.</ion-text>
+        </ion-item> -->
+      <ion-item>
+        <ion-label color="primary" position="floating">Phone</ion-label>
+        <ion-input color="medium" [class.invalid]="!updateForm.controls.phone.valid && (updateForm.controls.phone.dirty || submitAttempt)"
+          formControlName="phone" type="tel"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!updateForm.controls.phone.valid  && (updateForm.controls.phone.dirty || submitAttempt)">
+        <ion-text class="register-hint-text" color="medium">Please enter a valid phone number.</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Blood Group</ion-label>
+        <ion-select color="medium" [class.invalid]="!updateForm.controls.bloodGroup.valid && (updateForm.controls.bloodGroup.dirty || submitAttempt)"
+          placeholder="Select One" formControlName="bloodGroup">
+          <ion-select-option value="Not Sure">Not Sure</ion-select-option>
+          <ion-select-option value="AB+">AB+</ion-select-option>
+          <ion-select-option value="AB-">AB-</ion-select-option>
+          <ion-select-option value="A+">A+</ion-select-option>
+          <ion-select-option value="A-">A-</ion-select-option>
+          <ion-select-option value="B+">B+</ion-select-option>
+          <ion-select-option value="B-">B-</ion-select-option>
+          <ion-select-option value="O+">O+</ion-select-option>
+          <ion-select-option value="O-">O-</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!updateForm.controls.bloodGroup.valid  && submitAttempt">
+        <ion-text class="register-hint-text" color="medium">Please select your blood group.</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Gender</ion-label>
+        <ion-select color="medium" [class.invalid]="!updateForm.controls.gender.valid && (updateForm.controls.gender.dirty || submitAttempt)"
+          placeholder="Select One" formControlName="gender">
+          <ion-select-option value="f">Female</ion-select-option>
+          <ion-select-option value="m">Male</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!updateForm.controls.gender.valid  && submitAttempt">
+        <ion-text class="register-hint-text" color="medium">Please select gender.</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">District</ion-label>
+        <ion-select color="medium" [class.invalid]="!updateForm.controls.district.valid && (updateForm.controls.district.dirty || submitAttempt)"
+          placeholder="Select One" formControlName="district">
+          <ion-select-option value="P. Wilhems">P. Wilhems</ion-select-option>
+          <ion-select-option value="Grand Port">Grand Port</ion-select-option>
+          <ion-select-option value="Savanne">Savanne</ion-select-option>
+          <ion-select-option value="Moka">Moka</ion-select-option>
+          <ion-select-option value="Black River">Black River</ion-select-option>
+          <ion-select-option value="Port Louis">Port Louis</ion-select-option>
+          <ion-select-option value="Pamplemousses">Pamplemousses</ion-select-option>
+          <ion-select-option value="Flacq">Flacq</ion-select-option>
+          <ion-select-option value="Riv. du Rempart">Riv. du Rempart</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!updateForm.controls.district.valid  && submitAttempt">
+        <ion-text class="register-hint-text" color="medium">Please select the district you reside in.</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Country</ion-label>
+        <ion-select color="medium" disabled formControlName="country">
+          <ion-select-option selected value="Mauritius">Mauritius</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="error != ''">
+        <ion-text color="danger">{{error}}</ion-text>
+      </ion-item>
+    </form>
+  </ion-list>
+
+  <ion-button color="primary" [disabled]="!updateForm.valid || !updateForm.touched" expand="block" (click)="update()">Update</ion-button>
+
+</ion-content>

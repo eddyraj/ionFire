@@ -1,0 +1,32 @@
+<ng-container>
+  <img alt="logo" src="assets/icons/icon-192x192.png" >
+  <ion-list>
+    <form [formGroup]="loginForm">
+      <ion-item>
+        <ion-label color="primary" position="floating">Email</ion-label>
+        <ion-input color="medium" [class.invalid]="!loginForm.controls.email.pristine && !loginForm.controls.email.valid"
+          formControlName="email" email="true"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!loginForm.controls.email.pristine && !loginForm.controls.email.valid">
+        <ion-text class="login-hint-text" color="medium">Please enter a valid email.</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Password</ion-label>
+        <ion-input color="medium" [class.invalid]="!loginForm.controls.password.pristine && !loginForm.controls.password.valid"
+          formControlName="password" type="password"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!loginForm.controls.password.pristine && !loginForm.controls.password.valid">
+        <ion-text class="login-hint-text" color="medium">Please enter a valid password.</ion-text>
+      </ion-item>
+      <ion-item *ngIf="error != ''">
+        <ion-text text-center color="danger">{{error}}</ion-text>
+      </ion-item>
+    </form>
+  </ion-list>
+  <ion-button color="primary" expand="block" [disabled]="!loginForm.valid" (click)="dologin()">Login</ion-button>
+  <div text-center>
+    <ion-button color="medium" fill="clear" [routerLink]="['/register']" routerLinkActive="router-link-active" >Register</ion-button>
+    <ion-button color="medium" fill="clear" (click)="forgot()" routerLinkActive="router-link-active" >Forgot Password?</ion-button>
+  </div>
+  
+</ng-container>
